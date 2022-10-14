@@ -4,8 +4,9 @@ from django.contrib.auth import get_user_model
 from accounts.forms import CustomUserChangeForm, CustomUserCreationForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
@@ -67,5 +68,26 @@ def update(request):
 
 
 def logout(request):
+    auth_logout(request)
+    return redirect("accounts:index")
+
+
+def change_password(request):
+    if request.method == "POST":
+        form = PasswordChangeForm(request.user, request.POST)
+        if form.is_valid():
+            user = form.save()
+            update_session_auth_hash(request, user)
+            return redirect("accounts:index")
+    else:
+        form = PasswordChangeForm(request.user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/change_password.html", context)
+
+
+def delete(request):
+    request.user.delete()
     auth_logout(request)
     return redirect("accounts:index")

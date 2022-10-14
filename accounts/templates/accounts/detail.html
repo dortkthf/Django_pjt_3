@@ -2,10 +2,14 @@
 {% load django_bootstrap5 %}
 {% block content %}
 <div class="container">
-    <h1>안녕하세요 {{ user }} 님</h1>
+    <h1 class='mb-4'>안녕하세요 {{ request.user }} 님</h1>
+    <h2>{{ user }}님의 프로필 입니다.</h2>
     <p>{{ user.first_name }}</p>
     <p>{{ user.last_name }}</p>
     <p>{{ user.email }}</p>
+    <a href="{% url 'accounts:index' %}" class='btn btn-success'>홈으로</a>
+    {% if request.user == user %}
+        <a href="{% url 'accounts:update' %}" type="button" class="btn btn-dark">수정</a>
+    {% endif %}
 </div>
-<a href="{% url 'accounts:update' %}" type="button" class="btn btn-dark">수정</a>
 {% endblock %}

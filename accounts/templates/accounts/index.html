@@ -14,7 +14,7 @@
         </thead>
         <tbody>
             {% for account in accounts %}
-            <tr>
+            <tr onClick='location.href="{% url 'accounts:detail' account.pk %}"' style='cursor: pointer;'>
                 <td>{{ account.pk }}</td>
                 <td>{{ account.username }}</a></td>
                 <td>{{ account.email }}</td>

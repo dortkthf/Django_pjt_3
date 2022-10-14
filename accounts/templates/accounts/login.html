@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <h1 class='text-center my-4'>로그인 페이지</h1>
-    <form action="" method="POST">
+    <form action="{% url 'accounts:login' %}" method="POST">
         {% csrf_token %}
         {% bootstrap_form form %}
         <div class="d-grid">

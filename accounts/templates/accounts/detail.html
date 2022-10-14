@@ -7,4 +7,5 @@
     <p>{{ user.last_name }}</p>
     <p>{{ user.email }}</p>
 </div>
-{% endblock  %}
+<a href="{% url 'accounts:update' %}" type="button" class="btn btn-dark">수정</a>
+{% endblock %}

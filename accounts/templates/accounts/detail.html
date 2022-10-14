@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="container">
+    <h1>안녕하세요 {{ user }} 님</h1>
+    <p>{{ user.first_name }}</p>
+    <p>{{ user.last_name }}</p>
+    <p>{{ user.email }}</p>
+</div>
+{% endblock  %}

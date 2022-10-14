@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="container my-3">
+    <h1 class='text-center my-4'>게시판</h1>
+    <table class="table">
+        <thead>
+            <tr class="thead-dark">
+                <th>번호</th>
+                <th>제목</th>
+                <th>영화제목</th>
+                <th>작성날짜</th>
+                <th>수정날짜</th>
+                <th>별점</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for review in reviews %}
+            <tr>
+                <td>{{ review.pk }}</td>
+                <td><a href="{% url 'reviews:detail' review.pk %}">{{ review.title }}</a></td>
+                <td>{{ review.movie_name }}</td>
+                <td>{{ review.created_at|date:"Y년 m월 d일" }}</td>
+                <td>{{ review.updated_at|date:"Y년 m월 d일" }}</td>
+                {% if review.grade == 0 %}
+                <td>💿💿💿💿💿</td>
+                {% endif %}
+                {% if review.grade == 1 %}
+                <td>📀💿💿💿💿</td>
+                {% endif %}
+                {% if review.grade == 2 %}
+                <td>📀📀💿💿💿</td>
+                {% endif %}
+                {% if review.grade == 3 %}
+                <td>📀📀📀💿💿</td>
+                {% endif %}
+                {% if review.grade == 4 %}
+                <td>📀📀📀📀💿</td>
+                {% endif %}
+                {% if review.grade == 5 %}
+                <td>📀📀📀📀📀</td>
+                {% endif %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="container my-3">
+        {% if request.user.is_authenticated %}
+        <a href="{% url 'reviews:create' %}" class='btn btn-dark me-2'>추가</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

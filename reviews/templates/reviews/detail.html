@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+<div class="container">
+    <h1 class='text-center my-4'>리뷰 상세 페이지</h1>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">리뷰제목</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{ review.title}}" disabled
+            readonly>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlTextarea1" class="form-label">리뷰 내용</label>
+        <textarea class="form-control" id="exampleFormControlTextarea1" placeholder="{{ review.content }}" rows="3"
+            disabled readonly></textarea>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">영화제목</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{ review.movie_name}}"
+            disabled readonly>
+    </div>
+    <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">영화평점</label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="{{ review.grade}}" disabled
+            readonly>
+    </div>
+    <a href="{% url 'reviews:index' %}">{% bootstrap_button button_type="submit" content="홈으로" %}</a>
+    <a href="{% url 'reviews:update' review.pk %}">{% bootstrap_button button_type="submit" content="수정" %}</a>
+    <a href="{% url 'reviews:delete' review.pk %}">{% bootstrap_button button_type="submit" content="삭제" %}</a>
+</div>
+{% endblock %}

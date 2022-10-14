@@ -16,7 +16,7 @@
         </thead>
         <tbody>
             {% for review in reviews %}
-            <tr onClick='location.href="detail/{{review.pk}}/"' style='cursor: pointer;'>
+            <tr onClick='location.href="{% url 'reviews:detail' review.pk %}"' style='cursor: pointer;'>
                 <td>{{ review.pk }}</td>
                 <td>{{ review.title }}</td>
                 <td>{{ review.movie_name }}</td>

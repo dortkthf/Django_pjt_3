@@ -17,7 +17,7 @@
 <body>
     <nav class="navbar navbar-expand-lg bg-light sticky-top">
         <div class="container-fluid">
-          <a class="navbar-brand" href="{% url 'accounts:index' %}">
+          <a class="navbar-brand" href="{% url 'reviews:index' %}">
             <img src="{% static 'img/logo.png' %}" alt="logo" style='height:1.5rem;'>
           </a>
           {% if request.user.is_authenticated %}
@@ -34,10 +34,14 @@
             </li>
               <li class="nav-item text-end">
                 <a class="btn btn-success " href="{% url 'accounts:logout' %}">Logout</a>
+              </li>
+              <li class="nav-item text-end">
+                <a class="btn btn-primary " href="{% url 'accounts:index' %}">회원목록</a>
               </li>              
               <li class="nav-item text-end">
-                <a class="btn btn-primary " href="#">글쓰기</a>
+                <a class="btn btn-primary " href={% url 'reviews:create' %}">글쓰기</a>
               </li>
+              
               {% else %}
               <li class="nav-item text-end">
                 <a class="btn btn-primary " href="{% url 'accounts:login' %}">Login</a>

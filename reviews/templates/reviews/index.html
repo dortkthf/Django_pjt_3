@@ -44,14 +44,14 @@
             {% endfor %}
         </tbody>
     </table>
-    <div class="d-grid">
+    <div class="d-grid gap-2  ">
         {% if request.user.is_authenticated %}
-        <a href="{% url 'reviews:create' %}" class='btn btn-dark me-2'>추가</a>
+        <a href="{% url 'reviews:create' %}" class='btn btn-dark'>추가</a>
         {% endif %}
+        <form class="d-flex" role="search" action="{% url 'reviews:search' %}">
+            <input class="form-control" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
     </div>
-    <form class="d-flex" role="search" action="{% url 'reviews:search' %}">
-        <input class="form-control me-2" type="search" placeholder="검색어를 입력해주세요." aria-label="Search" name="search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-    </form>
 </div>
 {% endblock %}

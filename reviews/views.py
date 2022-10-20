@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 
 from .forms import ReviewForm
 from .models import Review
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -13,17 +14,20 @@ def index(request):
 
 
 def create(request):
-    if request.method == "POST":
+    if request.user.is_authenticated:
+        if request.method == "POST":
 
-        # DB에 저장하는 로직
-        review_form = ReviewForm(request.POST)
-        if review_form.is_valid():
-            review_form.save()
-            return redirect("reviews:index")
+            # DB에 저장하는 로직
+            review_form = ReviewForm(request.POST)
+            if review_form.is_valid():
+                review_form.save()
+                return redirect("reviews:index")
+        else:
+            review_form = ReviewForm()
+        context = {"review_form": review_form}
+        return render(request, "reviews/new.html", context=context)
     else:
-        review_form = ReviewForm()
-    context = {"review_form": review_form}
-    return render(request, "reviews/new.html", context=context)
+        return redirect("accounts:login")
 
 
 def detail(request, pk):
@@ -34,6 +38,7 @@ def detail(request, pk):
     return render(request, "reviews/detail.html", context)
 
 
+@login_required
 def update(request, pk):
     review = Review.objects.get(pk=pk)
     if request.method == "POST":
@@ -51,6 +56,7 @@ def update(request, pk):
     return render(request, "reviews/update.html", context)
 
 
+@login_required
 def delete(request, pk):
     reviews = Review.objects.get(pk=pk)
     reviews.delete()

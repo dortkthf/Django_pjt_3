@@ -12,11 +12,14 @@ from django.contrib.auth import update_session_auth_hash
 
 
 def index(request):
-    accounts = get_user_model().objects.all()
-    context = {
-        "accounts": accounts,
-    }
-    return render(request, "accounts/index.html", context)
+    if request.user.is_authenticated:
+        accounts = get_user_model().objects.all()
+        context = {
+            "accounts": accounts,
+        }
+        return render(request, "accounts/index.html", context)
+    else:
+        return redirect("accounts:login")
 
 
 def signup(request):
@@ -33,6 +36,8 @@ def signup(request):
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect("reviews:index")
     if request.method == "POST":
         form = AuthenticationForm(request, data=request.POST)
         if form.is_valid():
@@ -87,6 +92,7 @@ def change_password(request):
     return render(request, "accounts/change_password.html", context)
 
 
+@login_required
 def delete(request):
     request.user.delete()
     auth_logout(request)
